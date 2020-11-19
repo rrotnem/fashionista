@@ -1,0 +1,87 @@
+<div class="row mt-4">
+    <div class="col-2">
+
+    </div>
+
+
+    <div class="col w-100">
+
+        <span *ngFor="let pp of products; index as i; fist as isFirst">
+
+
+            <div *ngIf="i%3 === 0 && isFirst else anotherLine">
+
+                <div class="card mb-4 mt-4" style="width: 20rem; height: 40rem;">
+                    <img class="card-img-top text-center" style="width: 16rem; height: 22rem;" src="{{pp.url}}"
+                        alt="Card image cap">
+                    <div class="card-body mt-4 align-items-end">
+                        <h5 class="card-title ">{{pp.title}}</h5>
+                        <h5 class="card-title text-danger">$ {{pp.price}}</h5>
+                        <h5 class="card-title">Qty:{{pp.quantity}}</h5>
+
+                    </div>
+                    <input type="hidden" value="{{pp._id}}" #prodId />
+                    <div class="container text-center">
+
+                        <a class="btn btn-info mr-2" (click)="addCart(prodId.value)">Add to Cart</a>
+                        <a class="btn btn-info" (click)="addWishlist(prodId.value)">Add to Wishlist</a>
+
+                    </div>
+                </div>
+
+            </div>
+            <ng-template #anotherLine>
+
+                <div class="card mb-4 mr-4 d-line-block float-left " style="width: 20rem; height: 40rem;">
+                    <img class="card-img-top w-100 float-left" style="width: 16rem; height: 22rem;" src="{{pp.url}}"
+                        alt="Card image cap">
+                    <div class="card-body mt-4 text-center">
+                        <h5 class="card-title ">{{pp.title}}</h5>
+                        <h5 class="card-title text-danger">$ {{pp.price}}</h5>
+                        <h5 class="card-title">Qty:{{pp.quantity}}</h5>
+
+
+                    </div>
+                    <div class="container text-center">
+
+                        <input type="hidden" value="{{pp._id}}" #prodId />
+                        <div class="container text-center">
+
+                            <a class="btn btn-info mr-2" (click)="addCart(prodId.value)">Add to Cart</a>
+                            <a class="btn btn-info" (click)="addWishList(prodId.value)">Add to Wishlist</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </ng-template>
+
+        </span>
+
+
+    </div>
+    <div class="col-2">
+        <font color="red">{{this.result}}   </font>
+        <div class="row">
+            <div class="col w-100">
+              <div class="list-group" id="list-tab" role="tablist">
+                <a (click)="getLists()"class="btn btn-info display-4 active text-center">Wishlist >>></a>
+                <span *ngFor="let list of lists">
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">{{list.title}}</a>
+                </span>
+             
+              </div>
+            </div>
+    </div>
+
+</div>
+<div class="container">
+    <div *ngIf="length === 0" class="card text-center">
+        <div>
+            <h1>No Products Found</h1>
+        </div>
+
+    </div>
+</div>

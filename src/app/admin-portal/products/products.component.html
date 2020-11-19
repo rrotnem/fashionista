@@ -1,0 +1,135 @@
+<!-- <div>
+    
+
+    <div *ngIf="flag">
+        <table border="1">
+            <tr>
+                <th>Product ID</th>
+                <th>Product title</th>
+                <th>Product description</th>
+                <th>Department</th>
+                <th>Manufacturer</th>
+                <th>Image</th>
+            </tr>
+            <tr *ngFor="let pp of products">
+                <td>{{pp.id}}</td>
+                <td>{{pp.title}}</td>
+                <td>{{pp.description}}</td>
+                <td>{{pp.department}}</td>
+                <td>{{pp.manufacturer}}</td>
+                <td><img src="{{pp.url}}" width="250" height="100"></td>
+
+            </tr>
+
+        </table>
+
+    </div>
+</div> -->
+<div *ngIf="errors.length > 0" class="alert alert-danger">
+    <ul *ngFor="let error of errors">
+        <li>{{ error }}</li>
+    </ul>
+</div>
+
+
+<!-- ------------------------------------ -->
+<div class="row mt-4">
+    <div class="col-2">
+
+    </div>
+       
+    <div class="col w-100">
+
+        <span *ngFor="let pp of products; index as i; fist as isFirst">
+
+
+            <div *ngIf="i%3 === 0 && isFirst else anotherLine">
+                <input type="hidden" value="{{pp._id}}" #prodId/>
+
+                <div class="card mb-4" style="width: 20rem; height: 40rem;">
+                    <img class="card-img-top text-center" style="width: 16rem; height: 22rem;" src="{{pp.url}}"
+                        alt="Card image cap">
+                    <div class="card-body align-items-end">
+                        <h5 class="card-title ">{{pp.title}}</h5>
+                        <h5 class="card-title text-danger">$ {{pp.price}}</h5>
+                        <h5 class="card-title">Qty:{{pp.quantity}}</h5>
+                        <p>Description:</p>
+                        <textarea class="w-100" row="3">{{pp.description}}</textarea>
+                    </div>
+                    <div class="container text-center">
+                        
+                        <span class="d-inline-block pr-1"> 
+                            <a class="btn btn-sm btn-link" (click)="deleteProduct(prodId.value)">
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                  </svg>
+                            </a>
+                        </span>
+                        <span class="d-inline-block "> 
+                            <a  [routerLink]="['/admin/editProduct', {id:pp.id}]" class="btn btn-sm btn-link" >
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                  </svg>
+                            </a>
+                        </span>
+                        
+                    </div>
+                </div>
+
+            </div>
+            <ng-template #anotherLine>
+
+                <div class="card mb-4 mr-4 d-line-block float-left " style="width: 20rem; height: 40rem;">
+                    <img class="card-img-top w-100 float-left" style="width: 16rem; height: 22rem;" src="{{pp.url}}"
+                        alt="Card image cap">
+                    <div class="card-body align-items-end">
+                        <h5 class="card-title ">{{pp.title}}</h5>
+                        <h5 class="card-title text-danger">$ {{pp.price}}</h5>
+                        <h5 class="card-title">Qty:{{pp.quantity}}</h5>
+                        <p>Description:</p>
+                        <textarea class="w-100" row="3">{{pp.description}}</textarea>
+                    </div>
+                    <div class="container text-center">
+                          <span class="d-inline-block pr-1"> 
+                            <input type="hidden" value="{{pp._id}}" #prodId/>
+                            <a class="btn btn-sm btn-link" (click)="deleteProduct(prodId.value)">
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                  </svg>
+                            </a>
+                        </span>
+                        <span class="d-inline-block "> 
+                            <a  [routerLink]="['/admin/editProduct', {id:pp._id}]" class="btn btn-sm btn-link" >
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                  </svg>
+                            </a>
+                        </span>
+                        
+                    </div>
+
+                </div>
+               
+
+            </ng-template>
+
+        </span>
+
+
+    </div>
+    <div class="col-2">
+        
+
+    </div>
+       
+</div>
+<div class="container">
+    <div *ngIf="length === 0" class="card text-center">
+        <div><h1>No Products Found</h1></div>
+
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<div *ngIf="isLogin" style="height: 576px" class="d-flex justify-content-center bg-dark">
+  <div class="d-flex justify-content-center">
+    <form class="form-signin p-2 text-light" [formGroup]="loginForm" (ngSubmit)="login()">
+      <h1 class="display-6 ">Admin Login</h1>
+      <div class="form-group">
+        <div *ngIf="notify" class="alert alert-success">
+          {{ notify }}
+        </div>
+        <div *ngIf="errors.length > 0" class="alert alert-danger">
+          <p *ngFor="let error of errors">
+            {{ error }}
+          </p>
+        </div>
+        <label for="email">Email</label>
+        <input type="email" class="form-control" formControlName="email">
+      </div>
+      <div *ngIf="isValidInput('email')" class="alert alert-danger">
+        <div *ngIf="loginForm.controls['email'].errors.required">
+          Email is required.
+        </div>
+        <div *ngIf="loginForm.controls['email'].errors.pattern">
+          Must be a valid email format.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" formControlName="password">
+      </div>
+      <div *ngIf="isValidInput('password')" class="alert alert-danger">
+        <div *ngIf="loginForm.controls['password'].errors.required">
+          Password is required.
+        </div>
+      </div>
+      <div class="py-3">
+        <button class="p-3" [disabled]="!loginForm.valid" type="submit" class="btn btn-warning">Sign In</button>
+
+
+      </div>
+      <div><span>If you don't have an account,please click</span><a class="btn btn-link"
+          (click)="register()">register</a><span>to sign up.</span></div>
+      <div class="form-signin text-center"><a routerLink="/auth/login" class="btn btn-sm btn-info">Sign in as
+          Customer</a></div>
+    </form>
+  </div>
+</div>
+<!-- <div>register</div> ------------------------------------------------------------------------>
+
+
+<div *ngIf="!isLogin" style="height: 800px" class="d-flex justify-content-center bg-dark">
+  <div class="d-flex justify-content-center text-light">
+    <form class="form-signin" #registerForm="ngForm">
+      <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
+      <div class="form-group">
+        <div *ngIf="errors.length > 0" class="alert alert-danger">
+          <ul *ngFor="let error of errors">
+            <li>{{ error }}</li>
+          </ul>
+        </div>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" [(ngModel)]="formData.username" name="username" #username="ngModel"
+          required>
+      </div>
+      <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+        <div *ngIf="username.errors.required">
+          Username is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" [(ngModel)]="formData.email" name="email" #email="ngModel" required>
+      </div>
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+        <div *ngIf="email.errors.required">
+          Email is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" [(ngModel)]="formData.password" #password="ngModel" name="password"
+          required>
+      </div>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+        <div *ngIf="password.errors.required">
+          Password is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="passwordConfirmation">Confirm Password</label>
+        <input type="password" class="form-control" [(ngModel)]="formData.passwordConfirmation"
+          #passwordConfirmation="ngModel" name="passwordConfirmation" required>
+      </div>
+      <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)"
+        class="alert alert-danger">
+        <div *ngIf="passwordConfirmation.errors.required">
+          Confirm Password is required
+        </div>
+      </div>
+      <button (click)="adminRegister()" type="submit" class="btn btn-warning"
+        [disabled]="!registerForm.form.valid">Register</button>
+        <br />
+        
+       <div class="form-signin text-center"><span>If have an account,please click</span><a class="btn btn-link"
+        routerLink="/auth/login">login</a><span>to login </span>
+        </div>
+    </form>
+  </div> 
+</div>

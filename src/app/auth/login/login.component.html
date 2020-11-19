@@ -1,0 +1,41 @@
+<form class="form-signin" [formGroup]="loginForm" (ngSubmit)="login()">
+  <h1 class="h3 mb-3 font-weight-normal">Customer Login</h1>
+  <div class="form-group">
+    <div *ngIf="notify" class="alert alert-success">
+      {{ notify }}
+    </div>
+    <div *ngIf="errors.length > 0" class="alert alert-danger">
+      <p *ngFor="let error of errors">
+        {{ error }}
+      </p>
+    </div>
+    <label for="email">Email</label>
+    <input type="email" class="form-control" formControlName="email">
+  </div>
+  <div *ngIf="isValidInput('email')" class="alert alert-danger">
+    <div *ngIf="loginForm.controls['email'].errors.required">
+      Email is required.
+    </div>
+    <div *ngIf="loginForm.controls['email'].errors.pattern">
+      Must be a valid email format.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" formControlName="password">
+  </div>
+  <div *ngIf="isValidInput('password')" class="alert alert-danger">
+    <div *ngIf="loginForm.controls['password'].errors.required">
+      Password is required.
+    </div>
+  </div>
+  <div class="py-3">
+   <button class="p-3" [disabled]="!loginForm.valid" type="submit" class="btn btn-warning">Sign In</button>
+    
+
+  </div>
+  <div><span>If you don't have an account,please click</span><a class="btn btn-link" routerLink="/auth/register">register</a><span>to sign up.</span></div>
+  
+</form>
+<div class="form-signin text-center"><a routerLink="/auth/admin" class="btn btn-sm btn-info">Sign in as Admin</a></div>
