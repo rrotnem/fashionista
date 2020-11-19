@@ -6,6 +6,7 @@ const { authMiddleware } = require('../controller/UserController')
 
 router.post('/addList', list.StoreList)
 router.get('/getLists/:id', list.GetALLList)
+router.delete('/deleteList/:id', list.RemoveListById)
 
 
 module.exports = router

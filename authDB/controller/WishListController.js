@@ -34,3 +34,12 @@ exports.GetALLList = (req, res) => {
         return res.json(data)
     })
 }
+exports.RemoveListById = (req, res) =>{
+    var id = req.params.id;
+    WishList.deleteOne({productId:id},(err, data)=>{
+        if(err) throw err;
+        return res.json({
+            'msg': 'List is deleted.'
+        })
+    })
+  }

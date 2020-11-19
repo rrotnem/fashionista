@@ -37,6 +37,10 @@ export class AddProductComponent implements OnInit {
         });
     }
 
+    cancel(){
+      this.router.navigate(['/admin/products'], { queryParams: { registered: 'success' } });
+    }
+
    
   
   }

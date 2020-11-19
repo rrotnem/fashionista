@@ -19,6 +19,7 @@ export class UsersComponent implements OnInit {
     username:"",
     email:""
   }
+  isRegister:boolean = true;
 
   formData: any = {};
   isUser:boolean = false;
@@ -90,7 +91,9 @@ export class UsersComponent implements OnInit {
       .subscribe((data) => {
         this.isUser = false;
         this.result="Register Successfully"
+
         this.loadUsersInfo();
+        this.isUser = false;
         this.router.navigate(['/admin/users'], { queryParams: { registered: 'success' } });
        },
         (errorResponse) => {
@@ -106,6 +109,9 @@ export class UsersComponent implements OnInit {
 
   cancelUpdate(){
     this.hidden = true;
+  }
+  cancel(){
+    this.isUser = false;
   }
 
   

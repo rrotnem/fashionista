@@ -24,5 +24,10 @@ export class CartService {
     const URI = this.uriseg + '/getLists/';
     return this.httpClient.get<any[]>(URI+id);
   }
+  removeList(id):Observable<any[]> {
+  
+    const URI = this.uriseg + '/deleteList/';
+    return this.httpClient.delete<any[]>(URI + id);
+  }
 
 }

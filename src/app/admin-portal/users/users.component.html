@@ -1,109 +1,122 @@
 <div class="container text center">
-    <div *ngIf="errors.length > 0" class="alert alert-danger">
-        <ul *ngFor="let error of errors">
+  <div *ngIf="errors.length > 0" class="alert alert-danger">
+    <ul *ngFor="let error of errors">
+      <li>{{ error }}</li>
+    </ul>
+  </div>
+  <div *ngIf="result.length > 0" class="alert alert-info">
+
+    <li>{{ result }}</li>
+
+  </div>
+  <div *ngIf="isUser">
+    <form class="form-signin" #registerForm="ngForm">
+      <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
+      <div class="form-group">
+        <div *ngIf="errors.length > 0" class="alert alert-danger">
+          <ul *ngFor="let error of errors">
             <li>{{ error }}</li>
-        </ul>
-    </div>
-    <div *ngIf="result.length > 0" class="alert alert-info">
-        
-            <li>{{ result }}</li>
-        
-    </div>
-    <div *ngIf="isUser">
-      <form class="form-signin" #registerForm="ngForm">
-        <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
-        <div class="form-group">
-          <div *ngIf="errors.length > 0" class="alert alert-danger">
-            <ul *ngFor="let error of errors">
-              <li>{{ error }}</li>
-            </ul>
-          </div>
-          <label for="username">Username</label>
-          <input type="text" class="form-control" [(ngModel)]="formData.username" name="username" #username="ngModel"
-            required>
+          </ul>
         </div>
-        <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
-          <div *ngIf="username.errors.required">
-            Username is required
-          </div>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" [(ngModel)]="formData.username" name="username" #username="ngModel"
+          required>
+      </div>
+      <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+        <div *ngIf="username.errors.required">
+          Username is required
         </div>
-      
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" [(ngModel)]="formData.email" name="email" #email="ngModel" required>
-        </div>
-        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-          <div *ngIf="email.errors.required">
-            Email is required
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" [(ngModel)]="formData.password" #password="ngModel" name="password"
-            required>
-        </div>
-        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
-          <div *ngIf="password.errors.required">
-            Password is required
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="passwordConfirmation">Confirm Password</label>
-          <input type="password" class="form-control" [(ngModel)]="formData.passwordConfirmation"
-            #passwordConfirmation="ngModel" name="passwordConfirmation" required>
-        </div>
-        <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)"
-          class="alert alert-danger">
-          <div *ngIf="passwordConfirmation.errors.required">
-            Confirm Password is required
-          </div>
-        </div>
-        <button (click)="register()" type="submit" class="btn btn-warning"
-          [disabled]="!registerForm.form.valid">Register</button>
-        
-      </form>
-    </div>
- 
-    <table class="table table-striped" >
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col" rowspan="2">Username</th>
-            <th scope="col"></th>
-            <th scope="col" rowspan="2">Email</th>
-            <th scope="col"></th>
-            <th scope="col" rowspan="2">Action</th>
-            <th scope="col"><a  class="btn btn-sm btn-light" (click)="addUser()">
-              <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-            </a></th>
-          </tr>
-        </thead>
-    
-        <tbody *ngFor="let user of users">
-            <input type="hidden" name="id" value="{{user._id}}" #userId>
-            
-          <tr>
-            <td ><p *ngIf="hidden" >{{user.username}}</p></td>
-            <td ><input [type]="type" class="text-dark" name="username" value="{{user.username}}" placeholder="{{user.username}}" #username required></td>
-            <td ><p *ngIf="hidden">{{user.email}}</p></td>
-            <td ><input [type]="type" name="email" value="{{user.email}}" placeholder="{{user.email}}" #email required></td>
-            <td *ngIf="hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4" (click)="userEdit()">Edit</a><a class="btn btn-sm btn-secondary" (click)="deleteUser(userId.value)">Delete</a></td>
-            <td *ngIf="!hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4" (click)="updateUser(userId.value, username.value, email.value)">Update</a><a class="btn btn-sm btn-secondary" (click)="cancelUpdate()">Cancel</a></td>
-            <td></td>
-          </tr>
-       
-        </tbody>
-      
-      </table>      
-      <div *ngIf="length === 0" class="card text-center">
-          <div><h1>No Users Found</h1></div>
+      </div>
 
-      </div>     
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" [(ngModel)]="formData.email" name="email" #email="ngModel" required>
+      </div>
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+        <div *ngIf="email.errors.required">
+          Email is required
+        </div>
+      </div>
 
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" [(ngModel)]="formData.password" #password="ngModel" name="password"
+          required>
+      </div>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+        <div *ngIf="password.errors.required">
+          Password is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="passwordConfirmation">Confirm Password</label>
+        <input type="password" class="form-control" [(ngModel)]="formData.passwordConfirmation"
+          #passwordConfirmation="ngModel" name="passwordConfirmation" required>
+      </div>
+      <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)"
+        class="alert alert-danger">
+        <div *ngIf="passwordConfirmation.errors.required">
+          Confirm Password is required
+        </div>
+      </div>
+      <button (click)="register()" type="submit" class="btn btn-warning"
+        [disabled]="!registerForm.form.valid">Register</button>
+        <button (click)="cancel()" class="btn btn-light" type="submit">Cancel</button>
+
+    </form>
+  </div>
+
+  <table *ngIf="!isUser" class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" rowspan="2">Username</th>
+        <th scope="col"></th>
+        <th scope="col" rowspan="2">Email</th>
+        <th scope="col"></th>
+        <th scope="col" rowspan="2">Action</th>
+        <th scope="col"><a class="btn btn-sm btn-light" (click)="addUser()">
+            <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path fill-rule="evenodd"
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+          </a></th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let user of users">
+      <input type="hidden" name="id" value="{{user._id}}" #userId>
+
+      <tr>
+        <td>
+          <p *ngIf="hidden">{{user.username}}</p>
+        </td>
+        <td><input [type]="type" class="text-dark" name="username" value="{{user.username}}"
+            placeholder="{{user.username}}" #username required></td>
+        <td>
+          <p *ngIf="hidden">{{user.email}}</p>
+        </td>
+        <td><input [type]="type" name="email" value="{{user.email}}" placeholder="{{user.email}}" #email required></td>
+        <td *ngIf="hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4" (click)="userEdit()">Edit</a><a
+            class="btn btn-sm btn-secondary" (click)="deleteUser(userId.value)">Delete</a></td>
+        <td *ngIf="!hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4"
+            (click)="updateUser(userId.value, username.value, email.value)">Update</a><a
+            class="btn btn-sm btn-secondary" (click)="cancelUpdate()">Cancel</a></td>
+        <td></td>
+      </tr>
+
+    </tbody>
+
+  </table>
+  <div *ngIf="length === 0" class="card text-center">
+    <div>
+      <h1>No Users Found</h1>
+    </div>
+
+  </div>
 
 
-    </div>
+
+</div>

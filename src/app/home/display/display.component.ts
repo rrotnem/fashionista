@@ -19,6 +19,7 @@ export class DisplayComponent implements OnInit {
   result: string;
   lists: Array<any> = []
   temps: Array<any> = []
+ 
 
 
 
@@ -29,13 +30,15 @@ export class DisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProductInfo();
+
   }
   loadProductInfo() {
+    console.log("user id"+ this.auth.getUserId())
     this.flag = true;
     this.productService.getAllProductDetails().
       subscribe(data => {
         this.products = data;
-        this.length = this.products.length;
+        this.length = this.products.length;    
         this.listService.getAllLists(this.auth.getUserId()).
           subscribe(data => {
             this.temps = data;
@@ -50,7 +53,6 @@ export class DisplayComponent implements OnInit {
 
                   this.lists[i] = this.products[j];
                   break;
-
 
                 }
               }
@@ -137,6 +139,7 @@ export class DisplayComponent implements OnInit {
 
 
   addWishList(id) {
+   
     console.log(id)
     var inList: boolean = true;
     for (var i = 0; i < this.lists.length; i++) {    
@@ -157,12 +160,28 @@ export class DisplayComponent implements OnInit {
       this.listService.addWishlist(list).
         subscribe(data => {
           this.result = "*Product is added"       
-          this.router.navigate(['/home/cart'], { queryParams: { deleted: 'success' } });
+          this.router.navigate(['/home/display'], { queryParams: { deleted: 'success' } });
         },
           (errorResponse) => {
             this.errors.push(errorResponse.error.error);
           });
     }
+
+  }
+
+  removeList(id){
+    console.log(id)
+
+    this.listService.removeList(id).
+    subscribe(data => {
+         
+      this.router.navigate(['/home/cart'], { queryParams: { deleted: 'success' } });
+    },
+      (errorResponse) => {
+        this.errors.push(errorResponse.error.error);
+      });
+
+
 
   }
 
