@@ -2,14 +2,14 @@ const AdminUser = require('../model/AdminModel')
 const env = require('../DB')
 const jwt = require('jsonwebtoken')
 
-exports.adminLogin = function (req, res) { 
+exports.adminLogin = function (req, res) {
   const { email, password } = req.body;
   console.log(email);
 
   if (!email || !password) {
     return res.status(422).json({ 'error': 'Please provide email or password' })
   }
-  AdminUser.findOne({email}, function (err, user) {
+  AdminUser.findOne({ email }, function (err, user) {
     if (err) {
       return res.status(422).json({
         'error': 'Oops! Something went wrong'
@@ -17,8 +17,8 @@ exports.adminLogin = function (req, res) {
     }
 
     if (!user) {
-      console.log("this is"+user);
-      return res.status(422).json({ 'error': "Invalid User"})
+      console.log("this is" + user);
+      return res.status(422).json({ 'error': "Invalid User" })
     }
 
     if (user.hasSamePassword(password)) {
@@ -69,14 +69,18 @@ exports.adminRegister = function (req, res) {
       })
     }
   })
- }
+}
+
+
+
 
 exports.authMiddleware = function (req, res, next) {
   const json_token = req.headers.authorization
+  const user = jwt.verify(json_token, env.secret)
+  console.log(user)
   try {
-    if (json_token) {
-      const user = parseToken(json_token)
-      User.findById(user.userId, function (err, user) {
+    if (user) { 
+      AdminUser.findById(user.userId, function (err, user) {
         if (err) {
           return res.status(422).json({
             'error': 'Oops! Something went wrong'
@@ -97,11 +101,66 @@ exports.authMiddleware = function (req, res, next) {
   } catch (err) {
     res.status(403).json({
       success: false,
-      message: err
+      message: err,
+       error: 'Oops, Please check with your admin.' 
     })
   }
 }
 
 function parseToken(token) {
   return jwt.verify(token.split(' ')[1], env.secret)
+}
+
+exports.GetAllUsers = (req, res) => {
+  AdminUser.find({}, (err, data) => {
+    if (err) throw err;
+    res.json(data);
+  })
+}
+
+exports.DeleteUserById = (req, res) => {
+  var id = req.params.id;
+  AdminUser.deleteOne({ _id: id }, (err, result) => {
+    if (err) {
+      return res.status(422).json({
+        'error': 'Oops! Something went wrong'
+      })
+    }
+    console.log("this is" + result);
+
+    if (result.deletedCount > 0) {
+      res.json({ "msg": "Record delete Successfully" })
+    } else {
+      res.json({ "msg": "Record doesn't exist" })
+    }
+  })
+
+}
+exports.UpdateUser = (req, res) => {
+  console.log(req.body)
+  var id = req.body.id;
+  console.log(id)
+  var username = req.body.username;
+  var email = req.body.email;
+
+  AdminUser.updateOne({ _id: id }, {
+    $set: {
+      username: username,
+      email: email,
+    }
+  }, (err, result) => {
+    if (err) {
+      return res.status(422).json({
+        'error': 'Oops! Something went wrong'
+      })
+    }
+
+
+    if (result.nModified > 0) {
+      res.json({ "msg": "Record update Successfully" })
+    } else {
+      res.json({ "msg": "Record doesn't exist." })
+    }
+  })
+
 }

@@ -1,4 +1,4 @@
-<form class="form-signin" #registerForm="ngForm">
+<!-- <form class="form-signin" #registerForm="ngForm">
   <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
   <div class="form-group">
     <div *ngIf="errors.length > 0" class="alert alert-danger">
@@ -52,4 +52,69 @@
     [disabled]="!registerForm.form.valid">Register</button>
   
     <div class="py-3"><span>If you have an account,please click</span><a class="btn btn-link" routerLink="/auth/login">login</a><span>to sign in.</span></div>
+</form> -->
+
+
+<form class="form-signin" [formGroup]="dataForm" (ngSubmit)="register()">
+  <h1 class="h3 mb-3 font-weight-normal">Customer Registration</h1>
+  <div class="form-group">
+    <div *ngIf="notify" class="alert alert-success">
+      {{ notify }}
+    </div>
+    <div *ngIf="errors.length > 0" class="alert alert-danger">
+      <p *ngFor="let error of errors">
+        {{ error }}
+      </p>
+    </div>
+    <div>
+      <label for="username">Username</label>
+      <input type="text" class="form-control" formControlName="username">
+    </div>
+    <div *ngIf="isValidInput('username')" class="alert alert-danger">
+      <div *ngIf="dataForm.controls['username'].errors.required">
+        Username is required.
+      </div>
+    </div>
+
+    <label for="email">Email</label>
+    <input type="email" class="form-control" formControlName="email">
+  </div>
+  <div *ngIf="isValidInput('email')" class="alert alert-danger">
+    <div *ngIf="dataForm.controls['email'].errors.required">
+      Email is required.
+    </div>
+    <div *ngIf="dataForm.controls['email'].errors.pattern">
+      Must be a valid email format.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" formControlName="password">
+  </div>
+  <div *ngIf="isValidInput('password')" class="alert alert-danger">
+    <div *ngIf="dataForm.controls['password'].errors.required">
+      Password is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="passwordConfirmation">Confirm Password</label>
+    <input type="password" class="form-control" formControlName="passwordConfirmation">
+  </div>
+  <div *ngIf="isValidInput('passwordConfirmation')" class="alert alert-danger">
+    <div *ngIf="dataForm.controls['passwordConfirmation'].errors.required">
+      Password is required.
+    </div>
+  </div>
+
+  <div class="py-3">
+    <button class="p-3" [disabled]="!dataForm.valid" type="submit" class="btn btn-warning">Register</button>
+
+
+  </div>
+  <div class="py-3"><span>If you have an account,please click</span><a class="btn btn-link"
+      routerLink="/auth/login">login</a><span>to sign in.</span></div>
+
 </form>
+<div class="form-signin text-center"><a routerLink="/auth/admin" class="btn btn-sm btn-info">Sign in as Admin</a></div>

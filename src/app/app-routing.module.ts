@@ -13,7 +13,7 @@ const routes: Routes = [
 
   {path: '', component: HomeComponent},
 
-  { path: 'adminPortal', component: AdminPortalComponent },
+  { path: 'adminPortal', component: AdminPortalComponent,canActivate: [AuthGuard] },
   
 
 ];
