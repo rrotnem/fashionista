@@ -62,7 +62,7 @@
       </div>
       <button (click)="register()" type="submit" class="btn btn-warning"
         [disabled]="!registerForm.form.valid">Register</button>
-        <button (click)="cancel()" class="btn btn-light" type="submit">Cancel</button>
+      <button (click)="cancel()" class="btn btn-light" type="submit">Cancel</button>
 
     </form>
   </div>
@@ -99,8 +99,15 @@
           <p *ngIf="hidden">{{user.email}}</p>
         </td>
         <td><input [type]="type" name="email" value="{{user.email}}" placeholder="{{user.email}}" #email required></td>
-        <td *ngIf="hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4" (click)="userEdit()">Edit</a><a
-            class="btn btn-sm btn-secondary" (click)="deleteUser(userId.value)">Delete</a></td>
+        <td *ngIf="hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4" (click)="userEdit()">Edit</a>
+          <span *ngIf="id === user._id else others">
+            <a class="text-danger">*User</a>
+          </span>
+          <ng-template #others>
+            <a class="btn btn-sm btn-secondary" (click)="deleteUser(userId.value)">
+              Delete</a>
+          </ng-template>
+        </td>
         <td *ngIf="!hidden" rowspan="2"><a class="btn btn-sm btn-secondary mr-4"
             (click)="updateUser(userId.value, username.value, email.value)">Update</a><a
             class="btn btn-sm btn-secondary" (click)="cancelUpdate()">Cancel</a></td>

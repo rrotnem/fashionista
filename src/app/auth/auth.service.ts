@@ -60,6 +60,8 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem('auth_tkn');
     localStorage.removeItem('auth_meta');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('wishlist')
 
     this.decodedToken = new DecodedToken();
   }
@@ -72,6 +74,10 @@ export class AuthService {
     return this.decodedToken.username;
   }
   public getUserId(): string {
+    console.log(this.decodedToken)
+    return this.decodedToken.userId;
+  }
+  public getId():any{
     console.log(this.decodedToken)
     return this.decodedToken.userId;
   }

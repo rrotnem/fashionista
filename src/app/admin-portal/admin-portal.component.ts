@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 import { ProductService } from './product.service';
 import { UserService } from './user.service';
 
@@ -11,12 +12,16 @@ import { UserService } from './user.service';
 })
 export class AdminPortalComponent implements OnInit {
   error:string;
-  isProduct:boolean = true;
+  isProduct:boolean = false;
+  userId: string;
 
 
-    constructor(private userService: UserService, private router:Router) { }//DI for Service layer 
+    constructor(private auth: AuthService,private userService: UserService, private router:Router) { }//DI for Service layer 
 
     ngOnInit( ): void {
+      this.toProducts()
+      this.userId = this.auth.getId();
+      console.log("email" + this.userId)
     }
 
     isAuthentication(){
@@ -33,8 +38,15 @@ export class AdminPortalComponent implements OnInit {
     }
 
     toProducts(){
-      this.isProduct = true;
-      this.router.navigate(['/admin/products'], { queryParams: { access: 'success' } });
+      this.userService.getAuthentication().subscribe(data =>{
+        this.isProduct = true;
+        this.router.navigate(['/admin/products'], { queryParams: { access: 'success' } });
+      },
+       (errorResponse) => {
+         this.error = errorResponse.error.error;
+         this.router.navigate(['/auth/login'], { queryParams: { access: 'success' } });
+       });
+      
 
     }
   

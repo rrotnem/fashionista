@@ -1,5 +1,5 @@
 <div class="row mt-4">
-    <div class="col-2">
+    <div class="col-1">
 
     </div>
 
@@ -62,18 +62,21 @@
 
 
     </div>
-    <div class="col-2">
+    <div class="col-2 w-100">
         <font color="red">{{this.result}} </font>
         <div class="row">
             <div class="col w-100">
                 <div class="list-group" id="list-tab" role="tablist">
-                    <a (click)="getLists()" class="btn btn-info display-4 active text-center">Wishlist >>></a>
+                    <a  class="btn btn-info display-4 active text-center">Wishlist</a>
                     <span *ngFor="let list of lists">                      
 
-                        <input type="hidden" value="{{list._id}}" #prodId />
+                        <input type="hidden" value="{{list.product._id}}" #prodId />
                             
-                            <a (click)="removeList(prodId.value)" class="list-group-item list-group-item-action">
-                                {{list.title}}
+                            <a class="list-group-item list-group-item-action">
+                                {{list.product.title}} 
+                                <button  (click)="removeList(prodId.value)"type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
 
                             </a>                       
 

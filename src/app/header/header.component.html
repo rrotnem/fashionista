@@ -37,36 +37,50 @@
 
 <header class="blog-header p-2 py-3">
   <div class="row flex-nowrap justify-content-between align-items-center">
-    <div class="col-4 pt-1 text-center">
+    <div class="col-sm-4 pt-1 text-center">
       <ng-container *ngIf="!auth.isAuthenticated()">
         <a class="text-muted" href="#">Hi, Guest!</a>
-        </ng-container>
-        <ng-container *ngIf="auth.isAuthenticated()">
-          <a class="text-muted" href="#"> Hi, {{ auth.getUsername() }}</a>
-          </ng-container>
+      </ng-container>
+      <ng-container *ngIf="auth.isAuthenticated()">
+        <a class="text-muted" href="#"> Hi, {{ auth.getUsername() }}</a>
+      </ng-container>
     </div>
-    <div class="col-4 text-center">
+    <div class="col-sm-4 text-center">
 
       <a routerLink="/" class="display-4 blog-header-logo text-dark" href="#">Fashionista</a>
     </div>
-    <div class="col-4 d-flex justify-content-end align-items-center">
-      <a class="text-muted" href="#" aria-label="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"
-          focusable="false">
-          <title>Search</title>
-          <circle cx="10.5" cy="10.5" r="7.5" />
-          <path d="M21 21l-5.2-5.2" />
-        </svg>
-      </a>
-      <a routerLink="home/cart" class="material-icons p-2" style="font-size:36px">add_shopping_cart</a>
-      <ng-container *ngIf="!auth.isAuthenticated()">
-        <a routerLink="/auth/login" class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
-      </ng-container>
-      <ng-container *ngIf="auth.isAuthenticated()">    
+    <div class="col-sm-4">
+      <div class="row float-right">
+        <div class="col">
+        <a class="text-muted" href="#" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"
+            focusable="false">
+            <title>Search</title>
+            <circle cx="10.5" cy="10.5" r="7.5" />
+            <path d="M21 21l-5.2-5.2" />
+          </svg>
+        </a>
+      </div>
+      <div class="col">
+        <a routerLink="home/cart" class="material-icons p-2" style="font-size:36px">add_shopping_cart</a>
+      </div>
       
-        <a routerLink="/" class="btn btn-sm" (click)="logout()">LogOut</a>
-      </ng-container>
+        <ng-container *ngIf="!auth.isAuthenticated()">
+          <div class="col">
+          <a routerLink="/auth/login" class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+          </div>
+        </ng-container>
+      
+      
+        <ng-container *ngIf="auth.isAuthenticated()">
+          <div class="col">
+          <a routerLink="/" class="btn btn-sm" (click)="logout()">LogOut</a>
+          </div>
+        </ng-container>
+      </div>
+    
     </div>
+  
   </div>
 </header>

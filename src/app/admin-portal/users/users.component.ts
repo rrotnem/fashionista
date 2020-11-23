@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from '../user.service';
+
 
 @Component({
   selector: 'app-users',
@@ -23,12 +25,17 @@ export class UsersComponent implements OnInit {
 
   formData: any = {};
   isUser:boolean = false;
+  id:any;
 
 
-  constructor(private userService: UserService, private router:Router) { }
+  constructor(private auth:AuthService,private userService: UserService, private router:Router) { }
 
   ngOnInit(): void {
     this.loadUsersInfo()
+    this.id = this.auth.getId();
+      console.log("email" + this.id)
+    
+
   }
 
   loadUsersInfo(){
@@ -103,12 +110,11 @@ export class UsersComponent implements OnInit {
 
   addUser(){
     this.isUser = true;
-  }
-    
-  
+  }  
 
   cancelUpdate(){
     this.hidden = true;
+    this.type="hidden"
   }
   cancel(){
     this.isUser = false;

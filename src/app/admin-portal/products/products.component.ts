@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-products',
@@ -16,11 +17,15 @@ export class ProductsComponent implements OnInit {
   errors:any = []
   counter:number = 1;
   result:string;
+  mySubscription:any;
 
-  constructor(public productService:ProductService, public router:Router) { }//DI for service class
+  constructor(public productService:ProductService, public router:Router) {
+    
+   }//DI for service class
 
   ngOnInit(): void {
     this.loadProductInfo();
+
   }
   loadProductInfo(){
     this.flag = true;
@@ -40,9 +45,8 @@ export class ProductsComponent implements OnInit {
     
     this.productService.deleteProductById(prodId).subscribe(data =>{ 
       this.result = data.msg;
-      alert(this.result)
-      this.loadProductInfo();
-      this.router.navigate(['/admin/addProduct'], { queryParams: { deleted: 'success' } });
+      this.loadProductInfo()
+      // this.router.navigate(['/admin/addProduct'], { queryParams: { deleted: 'success' } });
     },
     (errorResponse)=>{
       this.errors.push(errorResponse.error.error);      
