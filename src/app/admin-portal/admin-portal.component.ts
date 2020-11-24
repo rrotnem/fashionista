@@ -13,15 +13,14 @@ import { UserService } from './user.service';
 export class AdminPortalComponent implements OnInit {
   error:string;
   isProduct:boolean = false;
-  userId: string;
+ 
 
 
     constructor(private auth: AuthService,private userService: UserService, private router:Router) { }//DI for Service layer 
 
     ngOnInit( ): void {
       this.toProducts()
-      this.userId = this.auth.getId();
-      console.log("email" + this.userId)
+      
     }
 
     isAuthentication(){

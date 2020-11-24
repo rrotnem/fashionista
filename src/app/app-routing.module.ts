@@ -10,12 +10,8 @@ import { AdminPortalComponent } from './admin-portal/admin-portal.component';
 
 
 const routes: Routes = [
-
   {path: '', component: HomeComponent},
-
   { path: 'adminPortal', component: AdminPortalComponent,canActivate: [AuthGuard] },
-  
-
 ];
 
 @NgModule({

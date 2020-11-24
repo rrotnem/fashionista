@@ -264,11 +264,5 @@ export class DisplayComponent implements OnInit {
   }
 
 
-
-  getLists() {
-    this.loadProductInfo()
-  }
-
-
 }
 
